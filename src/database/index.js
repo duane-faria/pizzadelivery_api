@@ -12,7 +12,7 @@ class Database {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }
-    );
+    ).then(() => console.log('mongodb successfully connected'));
   }
 }
 
