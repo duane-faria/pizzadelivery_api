@@ -6,6 +6,7 @@ class UserController {
       const schema = Yup.object().shape({
         name: Yup.string().required(),
         email: Yup.string().email().required(),
+        password: Yup.string().required(),
         address: Yup.string().required(),
       });
 
@@ -20,8 +21,10 @@ class UserController {
         });
       }
 
-      const { _id, name, email, address } = await models.User.create(req.body);
-      return res.json({ _id, name, email, address });
+      const { _id: id, name, email, address } = await models.User.create(
+        req.body
+      );
+      return res.json({ id, name, email, address });
     } catch (e) {
       return res.json({ error: e });
     }
