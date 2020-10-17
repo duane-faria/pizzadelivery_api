@@ -2,6 +2,11 @@ const models = require('../models');
 const Yup = require('Yup');
 
 class ProductSizeController {
+  async index(req, res) {
+    const sizes = await models.ProductSize.find();
+    res.json(sizes);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),

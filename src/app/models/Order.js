@@ -6,14 +6,6 @@ const OrderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  productType: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'ProductType',
-  },
-  productSize: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'ProductSize',
-  },
   createdAt: {
     type: Date,
     default: Date.now,
