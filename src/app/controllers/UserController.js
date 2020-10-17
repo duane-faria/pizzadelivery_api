@@ -1,7 +1,10 @@
 const models = require('../models');
 const Yup = require('yup');
 class UserController {
+
   async store(req, res) {
+    // #swagger.tags = ['User']
+    // #swagger.description = 'Endpoint para criar um usuário.'
     try {
       const schema = Yup.object().shape({
         name: Yup.string().required(),
