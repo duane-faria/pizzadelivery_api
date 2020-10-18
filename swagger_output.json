@@ -11,6 +11,10 @@
     {
       "name": "User",
       "description": "Endpoints"
+    },
+    {
+      "name": "Product",
+      "description": "Endpoints"
     }
   ],
   "schemes": [
@@ -35,7 +39,7 @@
     },
     "/user": {
       "post": {
-        "tags": [],
+        "tags": ["User"],
         "description": "",
         "parameters": [],
         "responses": {}
@@ -51,7 +55,7 @@
     },
     "/product": {
       "post": {
-        "tags": [],
+        "tags": ["Product"],
         "description": "",
         "parameters": [],
         "responses": {}

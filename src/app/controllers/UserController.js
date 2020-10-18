@@ -2,6 +2,11 @@ const models = require('../models');
 const Yup = require('yup');
 class UserController {
 
+  async index (req, res){
+    const users = await models.User.find();
+    return res.json(users);
+  }
+
   async store(req, res) {
     // #swagger.tags = ['User']
     // #swagger.description = 'Endpoint para criar um usuário.'

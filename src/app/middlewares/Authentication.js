@@ -2,10 +2,10 @@ const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 const authConfig = require('../config/Auth');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const auth = req.headers.authorization;
 
-  if (!authHeader) {
+  if (!auth) {
     return res.status(401).json({
       error: 'Token not provided',
     });
