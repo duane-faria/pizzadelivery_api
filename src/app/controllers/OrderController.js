@@ -43,14 +43,14 @@ class ProductController {
       itemsId = [...itemsId, orderItem._id];
     }
 
-    let t = await models.Order.findOneAndUpdate(
+    let orderComplete = await models.Order.findOneAndUpdate(
       { _id: order._id },
       { items: itemsId },
       {
         new: true,
       }
     );
-    return res.json(order);
+    return res.json(orderComplete);
   }
 
   async delete(req, res) {
