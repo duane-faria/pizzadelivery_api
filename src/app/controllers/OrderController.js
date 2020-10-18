@@ -3,10 +3,10 @@ const Yup = require('Yup');
 
 class ProductController {
   async index(req, res) {
-    const orders = await models.Order.find().populate(
-      'user',
-      'name email address'
-    );
+    const orders = await models.Order.find()
+      .populate('user', 'name email address')
+      .populate('items', 'product productType productSize ');
+
     return res.json(orders);
   }
 
@@ -30,18 +30,26 @@ class ProductController {
       note,
     });
 
-    let itemsId;
+    let itemsId = [];
 
-    items.forEach(async (item) => {
-      const orderItem = await models.OrderItem.create({
-        order: order._id,
-        product: order.product,
-        productType: order.type,
-        productSize: order.size,
+    for (let index = 0; index < items.length; index++) {
+      const item = items[index];
+      let orderItem = await models.OrderItem.create({
+        order: item._id,
+        product: item.product,
+        productType: item.type,
+        productSize: item.size,
       });
-    });
+      itemsId = [...itemsId, orderItem._id];
+    }
 
-    await models.Order.findOneAndUpdate({_id:order._id}, { items: itemsId });
+    let t = await models.Order.findOneAndUpdate(
+      { _id: order._id },
+      { items: itemsId },
+      {
+        new: true,
+      }
+    );
     return res.json(order);
   }
 
