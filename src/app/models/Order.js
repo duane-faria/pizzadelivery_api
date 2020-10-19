@@ -14,7 +14,22 @@ const OrderSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'OrderItem' }],
+  items: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+      productType: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ProductType',
+      },
+      productSize: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ProductSize',
+      },
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

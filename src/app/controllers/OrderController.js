@@ -5,7 +5,9 @@ class ProductController {
   async index(req, res) {
     const orders = await models.Order.find()
       .populate('user', 'name email address')
-      .populate('items', 'product productType productSize ');
+      .populate('items.product', '_id name')
+      .populate('items.productType', '_id name')
+      .populate('items.productSize', '_id name');
 
     return res.json(orders);
   }
@@ -22,35 +24,20 @@ class ProductController {
     }
 
     const { IdUser } = req;
-    const { price, note, items } = req.body;
+    let { price, note, items } = req.body;
+
+    items = items.map((i) => {
+      return { product: i.product, productSize: i.size, productType: i.type };
+    });
 
     const order = await models.Order.create({
       user: IdUser,
       price,
       note,
+      items,
     });
 
-    let itemsId = [];
-
-    for (let index = 0; index < items.length; index++) {
-      const item = items[index];
-      let orderItem = await models.OrderItem.create({
-        order: item._id,
-        product: item.product,
-        productType: item.type,
-        productSize: item.size,
-      });
-      itemsId = [...itemsId, orderItem._id];
-    }
-
-    let orderComplete = await models.Order.findOneAndUpdate(
-      { _id: order._id },
-      { items: itemsId },
-      {
-        new: true,
-      }
-    );
-    return res.json(orderComplete);
+    return res.json(order);
   }
 
   async delete(req, res) {
