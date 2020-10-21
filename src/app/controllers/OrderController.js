@@ -5,9 +5,9 @@ class ProductController {
   async index(req, res) {
     const orders = await models.Order.find()
       .populate('user', 'name email address')
-      .populate('items.product', '_id name')
-      .populate('items.productType', '_id name')
-      .populate('items.productSize', '_id name');
+      .populate('items.product', 'id name')
+      .populate('items.productType', 'id name')
+      .populate('items.productSize', 'id name');
 
     return res.json(orders);
   }

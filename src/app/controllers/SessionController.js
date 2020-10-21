@@ -18,11 +18,11 @@ class SessionController {
     const user = await models.User.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ error: 'user not found' });
+      return res.status(400).json({ error: 'user not found' });
     }
 
     if (!(await user.compareHash(password))) {
-      return res.status(401).json({ error: 'password is wrong' });
+      return res.status(400).json({ error: 'password is wrong' });
     }
 
     const { id, name } = user;
