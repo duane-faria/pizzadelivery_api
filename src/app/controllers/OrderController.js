@@ -3,7 +3,7 @@ const Yup = require('Yup');
 class ProductController {
   async index(req, res) {
 
-    const orders = await models.Order.paginate(
+    const order = await models.Order.paginate(
       {},
       {
         page: req.query.page || 1,
