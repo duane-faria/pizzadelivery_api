@@ -1,13 +1,34 @@
 const models = require('../models');
 const Yup = require('Yup');
-
 class ProductController {
   async index(req, res) {
-    const orders = await models.Order.find()
-      .populate('user', 'name email address')
-      .populate('items.product', 'id name')
-      .populate('items.productType', 'id name')
-      .populate('items.productSize', 'id name');
+
+    const orders = await models.Order.paginate(
+      {},
+      {
+        page: req.query.page || 1,
+        limit: 10,
+        populate: [
+          {
+            path: 'user',
+            select: 'name email address',
+          },
+          {
+            path: 'items.product',
+            select: 'id name',
+          },
+          {
+            path: 'items.productType',
+            select: 'id name',
+          },
+          {
+            path: 'items.productSize',
+            select: 'id name',
+          },
+        ],
+        sort: '-createdAt',
+      }
+    );
 
     return res.json(orders);
   }
