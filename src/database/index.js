@@ -1,18 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+  autoIncrement = require('mongoose-auto-increment');
 
 class Database {
   constructor() {
     this.mongo();
   }
 
-  mongo() {
-    this.mongoConnection = mongoose.connect(
+  async mongo() {
+    this.mongoConnection = await mongoose.connect(
       'mongodb://localhost/pizzadelivery',
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }
-    ).then(() => console.log('mongodb successfully connected'));
+    );
+    // autoIncrement.initialize(this.mongoConnection);
   }
 }
 

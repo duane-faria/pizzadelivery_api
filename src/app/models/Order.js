@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
+const mongoosePaginate = require('mongoose-paginate'),
+  autoIncrement = require('mongoose-auto-increment');
+
+autoIncrement.initialize(mongoose.connection); // This is important. You can remove initialization in different file
 
 const OrderSchema = new mongoose.Schema({
   orderNumber: {
@@ -32,7 +35,7 @@ const OrderSchema = new mongoose.Schema({
     },
   ],
   status: {
-    // preparo, entrega, entregue
+    // pedido, preparo, entrega, entregue
     type: String,
   },
   createdAt: {
@@ -42,4 +45,10 @@ const OrderSchema = new mongoose.Schema({
 });
 
 OrderSchema.plugin(mongoosePaginate);
+OrderSchema.plugin(autoIncrement.plugin, {
+  model: 'Order',
+  field: 'orderNumber',
+  startAt: 1,
+  incrementBy: 1,
+});
 module.exports = mongoose.model('Order', OrderSchema);
