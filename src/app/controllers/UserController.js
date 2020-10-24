@@ -32,6 +32,7 @@ class UserController {
     }
 
     const { id, name, email, address } = await models.User.create(req.body);
+
     return res.json({ id, name, email, address });
   }
 }

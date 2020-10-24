@@ -58,6 +58,8 @@ class ProductController {
       status,
     });
 
+    req.app.get('socketService').emiter('message', order);
+
     return res.json(order);
   }
 
