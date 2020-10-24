@@ -2,7 +2,6 @@ const models = require('../models');
 const Yup = require('Yup');
 class ProductController {
   async index(req, res) {
-
     const orders = await models.Order.paginate(
       {},
       {
@@ -45,7 +44,7 @@ class ProductController {
     }
 
     const { IdUser } = req;
-    let { price, note, items } = req.body;
+    let { price, note, items, status } = req.body;
 
     items = items.map((i) => {
       return { product: i.product, productSize: i.size, productType: i.type };
@@ -56,6 +55,7 @@ class ProductController {
       price,
       note,
       items,
+      status,
     });
 
     return res.json(order);

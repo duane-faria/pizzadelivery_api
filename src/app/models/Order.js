@@ -31,6 +31,10 @@ const OrderSchema = new mongoose.Schema({
       },
     },
   ],
+  status: {
+    // preparo, entrega, entregue
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
