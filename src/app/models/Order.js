@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate'),
   autoIncrement = require('mongoose-auto-increment');
 
-autoIncrement.initialize(mongoose.connection); // This is important. You can remove initialization in different file
+autoIncrement.initialize(mongoose.connection);
 
 const OrderSchema = new mongoose.Schema({
   orderNumber: {

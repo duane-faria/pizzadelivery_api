@@ -1,6 +1,6 @@
 const models = require('../models');
 const Yup = require('Yup');
-class ProductController {
+class OrderController {
   async index(req, res) {
     const orders = await models.Order.paginate(
       {},
@@ -63,13 +63,25 @@ class ProductController {
     return res.json(order);
   }
 
+  async update(req, res) {
+    const { id } = req.params;
+
+    if (!Object.keys(req.body).length) {
+      return res.json({ error: 'no data has been passed' });
+    }
+
+    await models.Order.update({ _id: id }, req.body);
+    const order = await models.Order.findOne({ _id: id });
+    return res.json(order);
+  }
+
   async delete(req, res) {
     const { id } = req.params;
-    const deleted = await models.Product.findOneAndDelete({
+    const deleted = await models.Order.findOneAndDelete({
       _id: id,
     });
     return res.json(deleted);
   }
 }
 
-module.exports = new ProductController();
+module.exports = new OrderController();

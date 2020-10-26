@@ -24,6 +24,6 @@ routes.get('/productSize', models.ProductSizeController.index);
 
 routes.get('/order', models.OrderController.index);
 routes.post('/order', models.OrderController.store);
-
+routes.put('/order/:id', models.OrderController.update);
 
 module.exports = routes;
