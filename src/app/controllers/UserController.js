@@ -11,7 +11,7 @@ class UserController {
       name: Yup.string().required(),
       email: Yup.string().email().required(),
       password: Yup.string().required(),
-      address: Yup.string().required(),
+      // address: Yup.string().required(),
     });
 
     const user = await models.User.findOne({
@@ -31,9 +31,9 @@ class UserController {
       });
     }
 
-    const { id, name, email, address } = await models.User.create(req.body);
+    const { id, name, email } = await models.User.create(req.body);
 
-    return res.json({ id, name, email, address });
+    return res.json({ id, name, email });
   }
 }
 module.exports = new UserController();

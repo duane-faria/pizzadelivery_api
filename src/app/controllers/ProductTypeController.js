@@ -20,6 +20,11 @@ class ProductTypeController {
 
     return res.json(productType);
   }
+
+  async delete(req, res) {
+    await models.ProductType.deleteMany({});
+    return res.json({ ok: true });
+  }
 }
 
 module.exports = new ProductTypeController();

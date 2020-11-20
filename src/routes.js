@@ -18,11 +18,14 @@ routes.get('/product', models.ProductController.index);
 
 routes.post('/productType', models.ProductTypeController.store);
 routes.get('/productType', models.ProductTypeController.index);
+routes.delete('/productType', models.ProductTypeController.delete);
 
 routes.post('/productSize', models.ProductSizeController.store);
 routes.get('/productSize', models.ProductSizeController.index);
+routes.delete('/productSize', models.ProductSizeController.delete);
 
 routes.get('/order', models.OrderController.index);
+routes.get('/order/:userId', models.OrderController.getUserOrders);
 routes.post('/order', models.OrderController.store);
 routes.put('/order/:id', models.OrderController.update);
 

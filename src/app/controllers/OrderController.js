@@ -44,7 +44,16 @@ class OrderController {
     }
 
     const { IdUser } = req;
-    let { price, note, items, status } = req.body;
+    let {
+      price,
+      note,
+      items,
+      status,
+      street,
+      number,
+      district,
+      cep,
+    } = req.body;
 
     items = items.map((i) => {
       return { product: i.product, productSize: i.size, productType: i.type };
@@ -56,6 +65,10 @@ class OrderController {
       note,
       items,
       status,
+      street,
+      number,
+      district,
+      cep,
     });
 
     req.app.get('socketService').emiter('message', order);
@@ -81,6 +94,37 @@ class OrderController {
       _id: id,
     });
     return res.json(deleted);
+  }
+
+  async getUserOrders(req, res) {
+    const { userId } = req.params;
+    const orders = await models.Order.paginate(
+      { user: userId },
+      {
+        page: req.query.page || 1,
+        limit: 10,
+        populate: [
+          {
+            path: 'user',
+            select: 'name email address',
+          },
+          {
+            path: 'items.product',
+            select: 'id name',
+          },
+          {
+            path: 'items.productType',
+            select: 'id name',
+          },
+          {
+            path: 'items.productSize',
+            select: 'id name',
+          },
+        ],
+        sort: '-createdAt',
+      }
+    );
+    return res.json(orders);
   }
 }
 
